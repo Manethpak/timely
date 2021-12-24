@@ -24,7 +24,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/clickaway', '~/plugins/notification'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,20 +33,44 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxt-hero-icons/outline/nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://localhost:8000/api',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          // required: true,
+          type: 'Token',
+        },
+        user: {
+          property: '',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/account/login', method: 'post' },
+          logout: { url: '/account/logout', method: 'delete' },
+          user: { url: '/account/user', method: 'get' },
+        },
+      },
+    },
+  },
 }
