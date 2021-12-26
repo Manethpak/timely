@@ -88,9 +88,9 @@ export default {
         if (res) {
           this.$router.push('/')
           this.$notify({
-            title: 'Succesful',
+            title: 'Successful',
             type: 'success',
-            text: 'Registered Completed',
+            text: 'Login Completed',
           })
         }
       } catch (e) {}
