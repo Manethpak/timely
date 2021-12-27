@@ -1,6 +1,6 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -24,7 +24,11 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/clickaway', '~/plugins/notification'],
+  plugins: [
+    '~/plugins/clickaway',
+    { src: '~/plugins/notification-ssr', ssr: true },
+    { src: '~/plugins/notification', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -71,6 +75,12 @@ export default {
           user: { url: '/account/user', method: 'get' },
         },
       },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/',
     },
   },
 }
