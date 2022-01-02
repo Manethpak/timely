@@ -74,7 +74,7 @@
                   >Your Profile</nuxt-link
                 >
                 <div
-                  @click="$auth.logout()"
+                  @click="logout"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   role="menuitem"
                   tabindex="-1"
@@ -108,6 +108,9 @@ export default {
   methods: {
     closeDropdown() {
       this.profileDropdown = false
+    },
+    logout() {
+      this.$auth.logout()
     },
   },
 }
