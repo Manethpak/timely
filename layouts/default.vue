@@ -2,7 +2,9 @@
   <div>
     <navigation-bar />
     <notifications position="top left" />
-    <nuxt class="container mx-auto px-6 sm:px-8 lg:px-12" />
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nuxt class="max-w-3xl mx-auto" />
+    </div>
   </div>
 </template>
 
