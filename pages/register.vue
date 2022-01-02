@@ -9,6 +9,15 @@
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
         Register a new account
       </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        or
+        <nuxt-link
+          to="/login"
+          class="font-medium text-indigo-600 hover:text-indigo-500"
+          >login</nuxt-link
+        >
+        to existing account.
+      </p>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
