@@ -10,7 +10,7 @@
         </span>
         <button
           type="button"
-          @click="showForm = !showForm"
+          @click="openForm"
           class="inline-flex items-center shadow-sm px-4 py-1.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           <outline-plus-sm-icon
@@ -22,7 +22,12 @@
       </div>
     </div>
 
-    <utils-modal-form v-show="showForm" @closeForm="showForm = false" />
+    <utils-modal-form
+      modalTitle="Add a new task"
+      v-show="showForm"
+      @closeForm="closeForm"
+      @submit="createTask"
+    />
 
     <utils-card-list />
   </div>
@@ -35,6 +40,29 @@ export default {
     return {
       showForm: false,
     }
+  },
+  methods: {
+    closeForm() {
+      this.showForm = false
+    },
+    openForm() {
+      this.showForm = true
+    },
+    async createTask(task) {
+      try {
+        await this.$store.dispatch('task/addTask', task)
+        this.$notify({
+          type: 'success',
+          title: 'Added task successfully',
+        })
+        this.closeForm()
+      } catch (e) {
+        this.$notify({
+          type: 'error',
+          title: 'Error occured',
+        })
+      }
+    },
   },
 }
 </script>

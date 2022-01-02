@@ -25,14 +25,17 @@
         <div class="block absolute top-0 right-0 pt-4 pr-4">
           <button
             type="button"
-            @click="$emit('closeForm')"
+            @click="onClose"
             class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-right"
           >
             <span class="sr-only">Close</span>
             <outline-x-icon class="h-6 w-6" />
           </button>
         </div>
-        <form @submit.prevent="submitForm" class="space-y-2">
+        <div class="text-center text-lg font-semibold top-3">
+          {{ modalTitle }}
+        </div>
+        <form @submit.prevent="onSubmit" class="space-y-2">
           <!-- Title -->
           <div>
             <label for="title" class="block text-sm font-medium text-gray-700">
@@ -40,7 +43,7 @@
             </label>
             <div class="mt-1">
               <input
-                v-model="newTask.title"
+                v-model="task.title"
                 type="text"
                 id="title"
                 name="title"
@@ -57,7 +60,7 @@
             </label>
             <div class="mt-1">
               <textarea
-                v-model="newTask.description"
+                v-model="task.description"
                 id="about"
                 name="about"
                 rows="3"
@@ -77,7 +80,7 @@
             </label>
             <div class="mt-1 flex justify-between">
               <select
-                v-model="newTask.status"
+                v-model="task.status"
                 id="status"
                 name="status"
                 autocomplete="status-name"
@@ -104,39 +107,27 @@
 
 <script>
 export default {
-  data() {
-    return {
-      newTask: {
-        title: '',
-        description: '',
-        status: 'to do',
-        owner: this.$auth.user.id,
-      },
-    }
-  },
-  methods: {
-    async submitForm() {
-      try {
-        await this.$store.dispatch('task/addTask', this.newTask)
-        this.newTask = {
+  props: {
+    task: {
+      default() {
+        return {
           title: '',
           description: '',
           status: 'to do',
           owner: this.$auth.user.id,
         }
-        this.$notify({
-          type: 'success',
-          title: 'Added task successfully',
-        })
-        this.close()
-      } catch (e) {
-        this.$notify({
-          type: 'error',
-          title: 'Error occured',
-        })
-      }
+      },
+      type: Object,
     },
-    close() {
+    modalTitle: {
+      type: String,
+    },
+  },
+  methods: {
+    onSubmit() {
+      this.$emit('submit', this.task)
+    },
+    onClose() {
       this.$emit('closeForm')
     },
   },
