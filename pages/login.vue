@@ -9,6 +9,15 @@
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
         Login to your account
       </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        or
+        <nuxt-link
+          to="/register"
+          class="font-medium text-indigo-600 hover:text-indigo-500"
+          >register</nuxt-link
+        >
+        to continue
+      </p>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -86,14 +95,19 @@ export default {
           },
         })
         if (res) {
-          this.$router.push('/')
           this.$notify({
             title: 'Successful',
             type: 'success',
             text: 'Login Completed',
           })
         }
-      } catch (e) {}
+      } catch (e) {
+        this.$notify({
+          title: 'Something went wrong',
+          type: 'error',
+          text: e.message,
+        })
+      }
     },
   },
 }
